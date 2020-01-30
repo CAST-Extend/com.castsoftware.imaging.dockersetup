@@ -1,0 +1,88 @@
+version: '3'
+services:
+  neo4j:
+    container_name: neo4j
+    image: castimaging/imagingneo4j:${NEO4J_IMAGE_TAG:-1.9.0}
+    restart: always
+    ports:
+      - "7474:7474"
+      - "7473:7473"
+      - "7687:7687"
+    volumes:
+      - ./neo4j/logs:/logs
+      - ./neo4j/configuration:/conf
+      - ./neo4j/csv:/import
+      - ./neo4j/data:/data
+      - ./neo4j/plugins:/plugins
+      - ./neo4j/data-model:/var/lib/neo4j/data-model
+    environment:
+      - NEO4J_dbms_memory_heap_maxSize=3G
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+  server:
+    container_name: server
+    image: castimaging/imagingservice:${SERVER_IMAGE_TAG:-1.9.0}
+    ports:
+      - "9000:9000"
+    restart: always
+    volumes:
+      - ./server/app.config:/opt/imaging/imaging-service/app.config
+      - ./server/app-config.json:/opt/imaging/imaging-service/app-config.json
+      - ./server/logs:/opt/imaging/imaging-service/logs
+      - ./neo4j/csv:/opt/imaging/imaging-service/upload
+    depends_on:
+      - neo4j
+    links:
+      - neo4j
+  etl:
+    container_name: etl
+    image: castimaging/imagingetl:${ETL_IMAGE_TAG:-1.9.0}
+    restart: always
+    ports:
+      - "9001:9001"
+    volumes:
+      - ./etl/app.config:/opt/imaging/imaging-etl/app.config
+      - ./etl/logs:/opt/imaging/imaging-etl/logs
+      - ./neo4j/csv:/opt/imaging/imaging-etl/upload
+    depends_on:
+      - neo4j
+    links:
+      - neo4j
+  sourcecode:
+    container_name: sourcecode
+    image: castimaging/imagingsourcecode:${SOURCECODE_IMAGE_TAG:-1.9.0}
+    restart: always
+    ports:
+      - "9980:9980"
+    volumes:
+      - ./sourcecode/application.properties:/opt/imaging/sourcecode/application.properties
+  login:
+    container_name: login
+    image: castimaging/imaginglogin:${LOGIN_IMAGE_TAG:-1.9.0}
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./login/security:/opt/imaging/login/security
+      - ./login/application.properties:/opt/imaging/login/application.properties
+    depends_on:
+      - server
+      - etl
+      - sourcecode
+    links:
+      - server
+      - etl
+      - sourcecode
+  nginx:
+    container_name: nginx
+    image: castimaging/imaging-fe:${FE_IMAGE_TAG:-1.9.0}
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf/mime.types:/etc/nginx/mime.types
+      - ./nginx/conf/proxy.conf:/etc/nginx/proxy.conf
+      - ./nginx/logs:/etc/nginx/logs
+    depends_on:
+      - login
