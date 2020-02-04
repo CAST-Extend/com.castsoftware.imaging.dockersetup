@@ -6,16 +6,6 @@ Cast Imaging provides MRI-like visibility into the most complex software systems
 * Docker
 * docker-compose
 * Python
-* The following ports need to be open for Imaging System services: 
-  - 80
-  - 443
-  - 8080
-  - 9000
-  - 9001
-  - 9980
-  - 7473
-  - 7474
-  - 7687
 
 ## Operating System
 
