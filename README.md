@@ -58,7 +58,13 @@ Creating etl        ... done
 Creating login      ... done
 Creating nginx      ... done
 ```
-Head over to `localhost` to use Imaging System. 
+Head over to `localhost` in the browser to use Imaging System. 
+
+###### Logs
+
+Run `imaging -s logs {containerName}` to view the logs for a specific container.
+
+Imaging System container names are `nginx`, `login`, `neo4j`, `etl`, `server`, `sourcecode`.
 
 ## Config
 
