@@ -19,8 +19,8 @@ action_list = ("start", "stop", "restart", "status",
 installation_location = "need-to-replace"
 compose_file = "-f "+"\"" + installation_location + "docker-compose.yml\" "
 
-images = {'FE_IMAGE_TAG': 'imaging-fe', 'ETL_IMAGE_TAG': 'imagingetl', 'SERVER_IMAGE_TAG': 'imagingservice',
-          'LOGIN_IMAGE_TAG': 'imaginglogin',  'NEO4J_IMAGE_TAG': 'imagingneo4j', 'SOURCECODE_IMAGE_TAG': 'imagingsourcecode'}
+images = {'FE_IMAGE_TAG': 'castimaging/imaging-fe', 'ETL_IMAGE_TAG': 'castimaging/imagingetl', 'SERVER_IMAGE_TAG': 'castimaging/imagingservice',
+          'LOGIN_IMAGE_TAG': 'castimaging/imaginglogin',  'NEO4J_IMAGE_TAG': 'castimaging/imagingneo4j', 'SOURCECODE_IMAGE_TAG': 'castimaging/imagingsourcecode'}
 
 
 def action(args):
