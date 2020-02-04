@@ -60,7 +60,7 @@ Creating nginx      ... done
 ```
 Head over to `localhost` in the browser to use Imaging System. 
 
-###### Logs
+#### Logs
 
 Run `imaging -s logs {containerName}` to view the logs for a specific container.
 
