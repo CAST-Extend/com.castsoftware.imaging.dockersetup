@@ -62,9 +62,39 @@ Head over to `localhost` in the browser to use Imaging System.
 
 #### Logs
 
-Run `imaging -s logs ***container-name***` to view the logs for a specific container.
+Run `imaging -s logs`***`container-name`*** to view the logs for a specific container.
 
 Imaging System container names are `nginx`, `login`, `neo4j`, `etl`, `server`, `sourcecode`.
+
+#### Stop Imaging System
+
+Run `imaging -s stop` to stop Imaging System from running by stopping all containers.
+
+Use `imaging -s stop`***`container-name`*** to stop a specific container.
+
+#### Restart Imaging System
+
+Run `imaging -s restart` to restart Imaging System.
+
+Use `imaging -s restart`***`container-name`*** to restart a specific container.
+
+#### Status
+
+Run `imaging -s status` to get the status of all running containers.
+
+```
+$ imaging -s status
+
+   Name                 Command               State                                   Ports
+----------------------------------------------------------------------------------------------------------------------------
+etl          /bin/sh -c ./imagingetl -C ...   Up      0.0.0.0:9001->9001/tcp
+login        /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:8080->8080/tcp
+neo4j        /sbin/tini -g -- /docker-e ...   Up      0.0.0.0:7473->7473/tcp, 0.0.0.0:7474->7474/tcp, 0.0.0.0:7687->7687/tcp
+nginx        nginx -g daemon off;             Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
+server       /bin/sh -c ./imagingservic ...   Up      0.0.0.0:9000->9000/tcp, 9001/tcp
+sourcecode   /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:9980->9980/tcp
+Done
+```
 
 ## Config
 
