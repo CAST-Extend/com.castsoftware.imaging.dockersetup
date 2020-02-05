@@ -62,7 +62,7 @@ Head over to `localhost` in the browser to use Imaging System.
 
 #### Logs
 
-Run `imaging -s logs {containerName}` to view the logs for a specific container.
+Run `imaging -s logs ***container-name***` to view the logs for a specific container.
 
 Imaging System container names are `nginx`, `login`, `neo4j`, `etl`, `server`, `sourcecode`.
 
