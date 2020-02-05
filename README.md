@@ -69,7 +69,9 @@ Imaging System container names are `nginx`, `login`, `neo4j`, `etl`, `server`, `
 ## Config
 
 Imaging system relies on these ports to be open and free: `[80, 443, 8080, 9000, 9001, 9980, 7473, 7474, 7687]`
-If you want to use your own port number, change the corresponding port's mapping in the `docker-compose.yml` file.
+If you want to use your own port number, change the corresponding port's mapping in the `docker-compose.yml` file present in your installation direcory (default: `/opt/CAST/container_support/`).
 
 For example, to change port `8080` to `8090` on the host machine, the mapping will be updated as: 
 > 8090:8080
+
+Run the `imaging -s start` command again to apply your changes.
