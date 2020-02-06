@@ -9,8 +9,8 @@
     <authentication-manager>
         <authentication-provider>
             <user-service>
-                <user name="cast" password="{noop}cast" authorities="USER"/>
-                <user name="skn" password="{noop}cast" authorities="USER"/>
+                <user name="cast" password="{noop}cast" authorities=""/>
+                <user name="admin" password="{noop}admin" authorities=""/>
             </user-service>
         </authentication-provider>
     </authentication-manager>

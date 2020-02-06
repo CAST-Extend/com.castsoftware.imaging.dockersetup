@@ -167,7 +167,7 @@
 
     <!-- Define basic information regarding WEBI as a Service Provider -->
     <bean id="metadataGenerator" class="org.springframework.security.saml.metadata.MetadataGenerator">
-        <property name="entityId" value="http://localhost:8080/saml/metadata"/>
+        <property name="entityId" value="http://localhost:8084/saml/metadata"/>
         <property name="extendedMetadata" ref="extendedMetadata"/>
         <property name="includeDiscoveryExtension" value="false"/>
         <property name="keyManager" ref="keyManager"/>
@@ -180,7 +180,7 @@
     <bean id="successRedirectHandler"
           class="com.castsoftware.aip.console.security.saml.SamlAuthenticationSuccessHandler">
         <property name="defaultTargetUrl"
-                  value="http://localhost/"/>
+                  value="https://localhost/"/>
     </bean>
 
     <bean id="authenticationFailureHandler"
