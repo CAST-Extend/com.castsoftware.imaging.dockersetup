@@ -91,7 +91,7 @@ etl          /bin/sh -c ./imagingetl -C ...   Up      0.0.0.0:9001->9001/tcp
 login        /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:8084->8084/tcp
 neo4j        /sbin/tini -g -- /docker-e ...   Up      0.0.0.0:7473->7473/tcp, 0.0.0.0:7474->7474/tcp, 0.0.0.0:7687->7687/tcp
 nginx        nginx -g daemon off;             Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
-server       /bin/sh -c ./imagingservic ...   Up      0.0.0.0:9000->9000/tcp, 9001/tcp
+server       /bin/sh -c ./imagingservic ...   Up      0.0.0.0:9000->9000/tcp
 sourcecode   /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:9980->9980/tcp
 Done
 ```
