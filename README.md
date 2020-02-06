@@ -14,7 +14,7 @@ Cast Imaging provides MRI-like visibility into the most complex software systems
 
 ## Setup
 
-Clone the repository
+Download the zip file from git or clone the repository
 ```
 git clone https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup.git
 ```
