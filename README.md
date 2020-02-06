@@ -78,6 +78,10 @@ Run `imaging -s restart` to restart Imaging System.
 
 Use `imaging -s restart`***`container-name`*** to restart a specific container.
 
+Any changes to the configuration files of containers will require a specific restart of that container, or whole Imaging System.
+
+`Note:` Changes to `docker-compose.yml` will always require `imaging -s start`.
+
 #### Status
 
 Run `imaging -s status` to get the status of all running containers.
