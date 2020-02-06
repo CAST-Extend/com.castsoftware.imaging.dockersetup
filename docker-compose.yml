@@ -60,7 +60,7 @@ services:
     image: castimaging/imaginglogin:${LOGIN_IMAGE_TAG:-1.10.0}
     restart: always
     ports:
-      - "8080:8080"
+      - "8084:8084"
     volumes:
       - ./login/security:/opt/imaging/login/security
       - ./login/application.properties:/opt/imaging/login/application.properties
