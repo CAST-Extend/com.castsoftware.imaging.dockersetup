@@ -58,7 +58,7 @@ Creating etl        ... done
 Creating login      ... done
 Creating nginx      ... done
 ```
-Head over to `localhost` in the browser to use Imaging System. 
+Head over to `localhost` in the browser to use Imaging System. Use the `admin/admin` or `cast/cast` credentials to login for the first time.
 
 #### Logs
 
@@ -88,7 +88,7 @@ $ imaging -s status
    Name                 Command               State                                   Ports
 ----------------------------------------------------------------------------------------------------------------------------
 etl          /bin/sh -c ./imagingetl -C ...   Up      0.0.0.0:9001->9001/tcp
-login        /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:8080->8080/tcp
+login        /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:8084->8084/tcp
 neo4j        /sbin/tini -g -- /docker-e ...   Up      0.0.0.0:7473->7473/tcp, 0.0.0.0:7474->7474/tcp, 0.0.0.0:7687->7687/tcp
 nginx        nginx -g daemon off;             Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
 server       /bin/sh -c ./imagingservic ...   Up      0.0.0.0:9000->9000/tcp, 9001/tcp
@@ -98,10 +98,10 @@ Done
 
 ## Config
 
-Imaging system relies on these ports to be open and free: `[80, 443, 8080, 9000, 9001, 9980, 7473, 7474, 7687]`
+Imaging system relies on these ports to be open and free: `[80, 443, 8084, 9000, 9001, 9980, 7473, 7474, 7687]`
 If you want to use your own port number, change the corresponding port's mapping in the `docker-compose.yml` file present in your installation direcory (default: `/opt/CAST/container_support/`).
 
-For example, to change port `8080` to `8090` on the host machine, the mapping will be updated as: 
-> 8090:8080
+For example, to change port `8084` to `8080` on the host machine, the `8084:8084` mapping will be updated as: 
+> 8080:8084
 
 Run the `imaging -s start` command again to apply your changes.
