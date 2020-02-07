@@ -37,7 +37,7 @@ def action(args):
 
             return output
         else:
-            raise Exception("service name not found")
+            raise Exception("Service name does not exist.")
     # stop all the services
     cmd = "docker-compose "+compose_file+action
     if action == "start":
@@ -72,7 +72,7 @@ def get_config_location():
     if platform.system() == "Windows":
         return "C:\Program Files\CAST\container_support"+"\\"
     else:
-        raise Exception("Platform not supported")
+        raise Exception("Platform not supported.")
 
 
 def get_exec_location():
@@ -82,7 +82,7 @@ def get_exec_location():
     if platform.system() == "Windows":
         return "C:\Program Files\CAST\container_support\imaging"
     else:
-        raise Exception("Not able to find location to install executable")
+        raise Exception("Unable to find location to install executable.")
 
 
 def uninstall(location=None):
@@ -93,7 +93,7 @@ def uninstall(location=None):
         cmd = "docker-compose "+compose_file+" down"
         run(cmd)
         os.remove(get_exec_location())
-        return "Imaging service uninstalled successfully"
+        return "Imaging System uninstalled successfully."
     except Exception as e:
         return e
 
@@ -116,16 +116,17 @@ def recursive_copy_files(source_path=None, destination_path=None, override=False
     items = os.listdir(os.getcwd())
     for item in items:
         if os.path.isdir(item):
+            if item == ".git":
+                continue
             path = os.path.join(destination_path, item)
             if not os.path.exists(path):
-
                 shutil.copytree(item, path)
         else:
             file = os.path.join(destination_path, item)
             if not os.path.exists(file) or override:
                 shutil.copyfile(item, file)
 
-    return "Imaging service install successfully"
+    return "Imaging System installed successfully."
 
 
 def update_config_file_location(dir_location):
@@ -177,7 +178,7 @@ class UpdateImage(argparse.Action):
             for key, value in self.imagesNeedToUpdate.items():
 
                 if images.get(key) is None:
-                    raise Exception("Not a valid image tag")
+                    raise Exception("Not a valid image tag.")
                 return self.checkImages(key, value)
 
             return action(["start"])
@@ -191,7 +192,7 @@ class UpdateImage(argparse.Action):
             imageslist = subprocess.check_output(
                 "docker images " + images[imagename]+":"+imagetag+" --format {{.Repository}}:{{.Tag}}",shell=True)
             if len(imageslist) == 0:
-                raise Exception(images[imagename]+":"+imagetag+" is not present on the host")
+                raise Exception(images[imagename]+":"+imagetag+" is not present on the host.")
             return self.checkEnvFile(imagename, imagetag)
         except Exception as error:
             return error
@@ -214,13 +215,13 @@ class UpdateImage(argparse.Action):
                             final.write(re.sub(line,newimage,filedata))
                             final.truncate()
                             final.close()
-                            return "Image Updated successfully.Restart the services"
+                            return "Image updated successfully. Restart the services."
                     f.close()
             with open(installation_location+".env",'a+') as file:
 
                 file.write('\n'+newimage)
                 file.close()
-                return "Image Updated successfully.Restart the services"
+                return "Image updated successfully. Restart the services."
 
         except Exception as error:
             return error
@@ -268,30 +269,33 @@ def main():
             return
     if args.install is not None:
         if args.install[0] == "install":
-            print("Installing the Imaging service")
-            if args.dir is not None:
-                recursive_copy_files(os.getcwd(), args.dir[0], override=False)
-                update_config_file_location(args.dir[0])
-                return
-            try:
-                update_config_file_location(get_config_location())
-                print(recursive_copy_files(override=True))
-                return
+            print("Installing Imaging System...")
+            try: 
+                if args.dir is not None:
+                    args.dir = os.path.expanduser(args.dir)
+                    update_config_file_location(args.dir)
+                    print(recursive_copy_files(os.getcwd(), args.dir, override=False))
+                    return
+                else:
+                    update_config_file_location(get_config_location())
+                    print(recursive_copy_files(override=True))
+                    return
             except Exception as e:
+                print("Imaging System installation failed.")
                 print(e)
             return
         else:
-            print("Not a valid command")
+            print("Not a valid command.")
             return
     if args.uninstall is not None:
         if args.uninstall[0] == "uninstall":
-            print("Uninstalling the Imaging service")
+            print("Uninstalling Imaging System...")
             if args.dir is not None:
-                print(uninstall(args.dir[0]))
+                print(uninstall(args.dir))
                 return
             print(uninstall())
         else:
-            print("Not a valid command")
+            print("Not a valid command.")
 
 
 if __name__ == "__main__":
