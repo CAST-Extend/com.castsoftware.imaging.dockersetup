@@ -106,6 +106,14 @@ sourcecode   /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:9980->9980/tcp
 Done
 ```
 
+#### Uninstalling
+
+Run `imaging -u uninstall` to uninstall Imaging System.
+
+If you encounter permission issues while uninstalling, use `sudo su -` to enter an interactive login shell as root user and run the command. 
+
+`Note:` The uninstall does not delete your installation directory. 
+
 ## Config
 
 Imaging system relies on these ports to be open and free: `[80, 443, 8084, 9000, 9001, 9980, 7473, 7474, 7687]`
