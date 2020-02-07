@@ -123,3 +123,9 @@ For example, to change port `8084` to `8080` on the host machine, the `8084:8084
 > 8080:8084
 
 Run the `imaging -s start` command again to apply your changes.
+
+## Security Modes
+
+Imaging System supports three security modes: `local`, `LDAP`, and `SAML`.
+
+Any change in the security mode must **ALWAYS** be accompanied by running the `server/switchSecurityMode.sh` script.
