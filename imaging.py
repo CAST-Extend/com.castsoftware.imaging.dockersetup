@@ -13,15 +13,13 @@ import stat
 
 
 services_list = ("login", "sourcecode", "nginx", "server", "etl", "neo4j")
-
 action_list = ("start", "stop", "restart", "status",
-               "logs", "kill","pull", "events", "install", "uninstall")
+    "logs", "kill","pull", "events", "install", "uninstall")
 installation_location = "need-to-replace"
 compose_file = "-f "+"\"" + installation_location + "docker-compose.yml\" "
-
-images = {'FE_IMAGE_TAG': 'castimaging/imaging-fe', 'ETL_IMAGE_TAG': 'castimaging/imagingetl', 'SERVER_IMAGE_TAG': 'castimaging/imagingservice',
-          'LOGIN_IMAGE_TAG': 'castimaging/imaginglogin',  'NEO4J_IMAGE_TAG': 'castimaging/imagingneo4j', 'SOURCECODE_IMAGE_TAG': 'castimaging/imagingsourcecode'}
-
+images_map = {'FE_IMAGE_TAG': 'castimaging/imaging-fe', 'ETL_IMAGE_TAG': 'castimaging/imagingetl', 'SERVER_IMAGE_TAG': 'castimaging/imagingservice',
+    'LOGIN_IMAGE_TAG': 'castimaging/imaginglogin',  'NEO4J_IMAGE_TAG': 'castimaging/imagingneo4j', 'SOURCECODE_IMAGE_TAG': 'castimaging/imagingsourcecode'}
+images = ('FE_IMAGE_TAG', 'ETL_IMAGE_TAG', 'SERVER_IMAGE_TAG', 'LOGIN_IMAGE_TAG', 'NEO4J_IMAGE_TAG', 'SOURCECODE_IMAGE_TAG')
 
 def action(args):
 
@@ -32,16 +30,18 @@ def action(args):
 
         if service_name in services_list:
 
-            cmd = "docker-compose " + compose_file + action + " " + service_name
+            cmd = "docker " + action + " " + service_name
             output = run(cmd)
 
             return output
         else:
             raise Exception("Service name does not exist.")
-    # stop all the services
-    cmd = "docker-compose "+compose_file+action
+        
+    cmd = "env $(cat " + installation_location + ".env | xargs) " + "docker-compose " + compose_file + action
+    if action == "status":
+        cmd = "docker ps"
     if action == "start":
-        cmd = "docker-compose "+compose_file+" up -d "
+        cmd = "env $(cat " + installation_location + ".env | xargs) " + "docker-compose " + compose_file + " up -d"
     output = run(cmd)
     return output.decode("utf-8")
 
@@ -157,56 +157,54 @@ class UpdateImage(argparse.Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
 
-        if values:
-            for item in values:
-                split_items = item.split("=", 1)
-                key = split_items[
-                    0
-                ].strip()  # we remove blanks around keys, as is logical
-                value = split_items[1]
-
-                self.imagesNeedToUpdate[key] = value
         try:
-
-            print(self.checkKeys())
+            if values:
+                for item in values:
+                    split_items = item.split("=", 1)
+                    key = split_items[0].strip()  # we remove blanks around keys, as is logical
+                    value = split_items[1]
+                    if self.dest == "updateimage":
+                        self.imagesNeedToUpdate[key] = value        
+                if self.dest == "updateimage":        
+                    self.checkKeys()
+                elif key == "v" and self.dest == "update":
+                    self.updateAllImageTags(value)    
+                else:
+                  print("Update failed")
+                  return
         except Exception as error:
             print(error)
 
+    def updateAllImageTags(self, imageTag):
+        try:
+            for image in images:
+                self.updateEnvFile(image, imageTag)
+            print("All images have been updated to v" + imageTag)
+            print("Restarting Imaging System...")
+            print(action(["start"]))
+        except Exception as error: 
+            print(error)
+    
     def checkKeys(self):
         try:
-
             for key, value in self.imagesNeedToUpdate.items():
-
-                if images.get(key) is None:
+                if images_map.get(key) is None:
                     raise Exception("Not a valid image tag.")
-                return self.checkImages(key, value)
-
-            return action(["start"])
+                self.updateEnvFile(key, value)
+            print("Restarting Imaging System...")
+            print(action(["start"]))
         except Exception as error:
             print(error)
 
-    def checkImages(self, imagename, imagetag):
-
-        try:
-
-            imageslist = subprocess.check_output(
-                "docker images " + images[imagename]+":"+imagetag+" --format {{.Repository}}:{{.Tag}}",shell=True)
-            if len(imageslist) == 0:
-                raise Exception(images[imagename]+":"+imagetag+" is not present on the host.")
-            return self.checkEnvFile(imagename, imagetag)
-        except Exception as error:
-            return error
-
-    def checkEnvFile(self, imagename, imagetag):
+    def updateEnvFile(self, imagename, imagetag):
 
         try:
             newimage = imagename+"="+imagetag
             if os.path.exists(installation_location+".env"):
-
                 with open( installation_location+".env", 'r+') as f:
                     filedata = f.read()
+                    tagExists = False
                     for line in filedata.split('\n'):
-
                         if line.startswith('#'):
                             continue
                         if re.search(imagename,line) != None :
@@ -215,13 +213,19 @@ class UpdateImage(argparse.Action):
                             final.write(re.sub(line,newimage,filedata))
                             final.truncate()
                             final.close()
-                            return "Image updated successfully. Restart the services."
+                            tagExists = True
+                            break
+                    if not tagExists:
+                        final = open(installation_location+".env",'a+')
+                        final.write(newimage+'\n')
+                        final.close()
                     f.close()
-            with open(installation_location+".env",'a+') as file:
-
-                file.write('\n'+newimage)
-                file.close()
-                return "Image updated successfully. Restart the services."
+                    print("Image tag for " + imagename + " updated successfully with " + imagetag)
+            else:
+                with open(installation_location+".env",'a+') as file:
+                    file.write(newimage+'\n')
+                    file.close()
+                    print("Image tag for " + imagename + " updated successfully with " + imagetag)
 
         except Exception as error:
             return error
@@ -237,16 +241,23 @@ def main():
                         metavar="command", default=None,
                         help="imaging.py -s status")
     parser.add_argument("-n", "--install", type=str, nargs='+',
-                        default=None, help="install Imaging service")
+                        default=None, help="Install Imaging System.")
     parser.add_argument("-u", "--uninstall", type=str, nargs='+',
-                        default=None, help="uninstall Imaging service")
+                        default=None, help="Uninstall Imaging System.")
     parser.add_argument("-d", "--dir", type=str,
-                        help="location to install/uninstall Imaging service")
+                        help="Provide the installation location for Imaging System.")
     parser.add_argument(
         "--updateimage",
         metavar="KEY=VALUE",
         nargs="+",
-        help="update the image tag",
+        help="Update individual image tags.",
+        action=UpdateImage,
+    )
+    parser.add_argument(
+        "--update",
+        metavar="KEY=VALUE",
+        nargs="+",
+        help="Update Imaging System.",
         action=UpdateImage,
     )
 
@@ -260,8 +271,6 @@ def main():
 
     if args.service is not None:
         if args.service[0] in action_list:
-            if args.service[0] == "status":
-                args.service[0] = "ps"
             print(action(args.service))
             return
         else:
