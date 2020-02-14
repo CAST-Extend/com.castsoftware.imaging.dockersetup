@@ -97,14 +97,13 @@ Run `imaging -s status` to get the status of all running containers.
 ```
 $ imaging -s status
 
-   Name                 Command               State                                   Ports
-----------------------------------------------------------------------------------------------------------------------------
-etl          /bin/sh -c ./imagingetl -C ...   Up      0.0.0.0:9001->9001/tcp
-login        /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:8084->8084/tcp
-neo4j        /sbin/tini -g -- /docker-e ...   Up      0.0.0.0:7473->7473/tcp, 0.0.0.0:7474->7474/tcp, 0.0.0.0:7687->7687/tcp
-nginx        nginx -g daemon off;             Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
-server       /bin/sh -c ./imagingservic ...   Up      0.0.0.0:9000->9000/tcp
-sourcecode   /bin/sh -c java -jar -Xmx1 ...   Up      0.0.0.0:9980->9980/tcp
+CONTAINER ID        IMAGE                                  COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+ccdc922052b6        castimaging/imaging-fe:1.10.0          "nginx -g 'daemon of…"   22 hours ago        Up 22 hours         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp                   nginx
+f26820c6c9df        castimaging/imaginglogin:1.10.0        "/bin/sh -c 'java -j…"   22 hours ago        Up 22 hours         8080/tcp, 0.0.0.0:8084->8084/tcp                           login
+66a09ae5396e        castimaging/imagingetl:1.10.0          "/bin/sh -c './imagi…"   22 hours ago        Up 22 hours         0.0.0.0:9001->9001/tcp                                     etl
+453dc3aea77c        castimaging/imagingservice:1.10.0      "/bin/sh -c './imagi…"   22 hours ago        Up 22 hours         0.0.0.0:9000->9000/tcp, 9001/tcp                           server
+b9d993c42173        castimaging/imagingsourcecode:1.10.0   "/bin/sh -c 'java -j…"   22 hours ago        Up 22 hours         0.0.0.0:9980->9980/tcp                                     sourcecode
+f15057a6e740        castimaging/imagingneo4j:1.10.0        "/sbin/tini -g -- /d…"   22 hours ago        Up 22 hours         0.0.0.0:7473-7474->7473-7474/tcp, 0.0.0.0:7687->7687/tcp   neo4j
 Done
 ```
 
