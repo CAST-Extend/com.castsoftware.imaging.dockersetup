@@ -21,13 +21,13 @@ git clone https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup.gi
 
 Navigate to the directory and run the install script
 ```
-sudo python imaging.py -n install
+python imaging.py -n install
 ```
 This will install Imaging System to the default location `/opt/CAST/container_support` and the cli tool to `/usr/local/bin`. 
 
 To specify a custom installation location
 ```
-sudo python imaging.py -n install -d "/install/here/"
+python imaging.py -n install -d "/install/here/"
 ```
 The cli tool will always be installed to `/usr/local/bin`
 
