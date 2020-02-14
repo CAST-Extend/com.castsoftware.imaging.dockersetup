@@ -51,7 +51,9 @@ optional arguments:
                         uninstall Imaging service
   -d DIR, --dir DIR     location to install/uninstall Imaging service
   --updateimage KEY=VALUE [KEY=VALUE ...]
-                        update the image tag
+                        Update individual image tags.
+  --update KEY=VALUE 
+                        Update Imaging System.
 ```
 
 Start Imaging System with `imaging -s start`
