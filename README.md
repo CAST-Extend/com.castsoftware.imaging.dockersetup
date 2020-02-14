@@ -129,3 +129,9 @@ Run the `imaging -s start` command again to apply your changes.
 Imaging System supports three security modes: `local`, `LDAP`, and `SAML`.
 
 Any change in the security mode must **ALWAYS** be accompanied by running the `server/switchSecurityMode.sh` script.
+
+## Upgrades
+
+To either upgrade or downgrade Imaging System version, pass the version number as an argument(as **KEY=VALUE**) to the update command. Example: `imaging --update v=1.10.0`.
+
+This will restart version 1.10.0 of Imaging System. Versions are maintained in the `.env` file. Use the update command to update this file and restart Imaging System anytime.
