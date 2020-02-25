@@ -84,5 +84,6 @@ services:
       - ./nginx/conf/mime.types:/etc/nginx/mime.types
       - ./nginx/conf/proxy.conf:/etc/nginx/proxy.conf
       - ./nginx/logs:/etc/nginx/logs
+      - ./nginx/html/app-config.js:/opt/imaging/web/dist/app-config.js
     depends_on:
       - login
