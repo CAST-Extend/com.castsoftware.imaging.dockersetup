@@ -14,7 +14,7 @@ Cast Imaging provides MRI-like visibility into the most complex software systems
 
 ## Setup
 
-Download the zip file from git or clone the repository
+Download the zip file from [releases](https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup/releases) or clone the repository
 ```
 git clone https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup.git
 ```
@@ -30,6 +30,17 @@ To specify a custom installation location
 python imaging.py -n install -d "/install/here/"
 ```
 The cli tool will always be installed to `/usr/local/bin`
+
+#### ETL Automation
+
+Download the three assets from the [releases](https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup/releases) page: `etl-automation`, `exporter`, `automation-scripts.zip`
+
+Place the two binaries in the `etl-automation` folder of your installation directory, where the `config.json` file is contained. Extract the contents of `automation-scripts.zip` to the same folder. 
+
+Make sure the two binaries have execute permissions: 
+```
+$ sudo chmod +x etl-automation exporter
+```
 
 ## Usage
 
@@ -105,6 +116,29 @@ f26820c6c9df        castimaging/imaginglogin:1.10.0        "/bin/sh -c 'java -j�
 b9d993c42173        castimaging/imagingsourcecode:1.10.0   "/bin/sh -c 'java -j…"   22 hours ago        Up 22 hours         0.0.0.0:9980->9980/tcp                                     sourcecode
 f15057a6e740        castimaging/imagingneo4j:1.10.0        "/sbin/tini -g -- /d…"   22 hours ago        Up 22 hours         0.0.0.0:7473-7474->7473-7474/tcp, 0.0.0.0:7687->7687/tcp   neo4j
 Done
+```
+
+#### ETL Automation
+
+Configure the `config.json` file in the `etl-automation` directory accordingly. The file contains the following parameters:
+
+```
+PORT //Database Port
+HOST //Database Instance
+SCHEMA //Database schema name
+OUTPUTDIR //Directory to place exported zip file of application
+IMAGING_HOSTNAME //Your Imaging Instance URL/IP
+IMAGING_PORT //Port of your Imaging Instance
+IMAGING_ADMIN_USER //Name of admin user of your Imaging Instance
+TOKEN //Same as proxy.config.token.values in login/application.properties file
+USERNAME //Database username
+PASSWORD //Database password
+LOG_PATH (OPTIONAL) //Logfile will be generated if provided
+```
+
+Run the `etl-automation` executable with the config file:
+```
+sudo ./etl-automation -CONFIG config.json
 ```
 
 #### Uninstalling
