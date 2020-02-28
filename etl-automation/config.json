@@ -1,0 +1,14 @@
+{
+  "PORT" : 2282,
+  "HOST" : "localhost",
+  "SCHEMA" : "base_local",
+  "OUTPUTDIR" : "my_output_folder",
+  "IMAGING_HOSTNAME" : "localhost",
+  "IMAGING_PORT" : 9001,
+  "IMAGING_ADMIN_USER" : "admin",
+  "TOKEN" : "D5ED6A406775FC71B8D2A978883E8ED4",
+  "USERNAME" : "operator",
+  "PASSWORD" : "CastAIP",
+  "LOG_PATH" : ""
+}
+
