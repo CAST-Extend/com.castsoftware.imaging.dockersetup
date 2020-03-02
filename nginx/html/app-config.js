@@ -1,6 +1,6 @@
 window.config = {
   basePath: window.defaultBasePath ? `/imaging/${window.defaultBasePath}` : '/imaging',
-  cypherSearch: true,
+  cypherSearch: false,
   imagingAssistant: false,
   language: 'English_en', // Allowed values 'English_en' ,'Chinese_ch'
   isAdmin: true,
