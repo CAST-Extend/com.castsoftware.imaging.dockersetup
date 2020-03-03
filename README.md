@@ -35,7 +35,7 @@ The cli tool will always be installed to `/usr/local/bin`
 
 Download the three assets from the [releases](https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup/releases) page: `etl-automation`, `exporter`, `automation-scripts.zip`
 
-Place the two binaries in the `etl-automation` folder of your installation directory, where the `config.json` file is contained. Extract the contents of `automation-scripts.zip` to the same folder. 
+Place the two binaries in the `etl-automation` folder of your installation directory, where the `etl-config.json` file is contained. Extract the contents of `automation-scripts.zip` to the same folder. 
 
 Make sure the two binaries have execute permissions: 
 ```
@@ -120,7 +120,7 @@ Done
 
 #### ETL Automation
 
-Configure the `config.json` file in the `etl-automation` directory accordingly. The file contains the following parameters:
+Configure the `etl-config.json` file in the `etl-automation` directory accordingly. The file contains the following parameters:
 
 ```
 PORT //Database Port
@@ -138,7 +138,7 @@ LOG_PATH (OPTIONAL) //Logfile will be generated if provided
 
 Run the `etl-automation` executable with the config file:
 ```
-sudo ./etl-automation -CONFIG config.json
+sudo ./etl-automation -CONFIG etl-config.json
 ```
 
 #### Uninstalling
