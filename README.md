@@ -21,15 +21,17 @@ git clone https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup.gi
 
 Navigate to the directory and run the install script
 ```
-python imaging.py -n install
+sudo python imaging.py -n install
 ```
 This will install Imaging System to the default location `/opt/CAST/container_support` and the cli tool to `/usr/local/bin`. 
 
 To specify a custom installation location
 ```
-python imaging.py -n install -d "/install/here/"
+sudo python imaging.py -n install -d "/install/here/"
 ```
 The cli tool will always be installed to `/usr/local/bin`
+
+`Note:` When specifying a custom installation directory, be careful to not use `(~)` to depict the home directory, and provide the full path instead. When running commands with `sudo`, `(~)` will expand to home directory of the root user and not the currently logged in user that you might be expecting. 
 
 #### ETL Automation
 
