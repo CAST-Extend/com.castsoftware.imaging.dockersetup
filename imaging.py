@@ -179,7 +179,7 @@ class UpdateImage(argparse.Action):
         try:
             for image in images:
                 self.updateEnvFile(image, imageTag)
-            print("All images have been updated to v" + imageTag)
+            print("All image tags have been updated to v" + imageTag)
             print("Restarting Imaging System...")
             print(action(["start"]))
         except Exception as error: 
