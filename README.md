@@ -9,8 +9,8 @@ Cast Imaging provides MRI-like visibility into the most complex software systems
 
 ## Operating System
 
-* Ubuntu
-* centOS
+* Ubuntu 64-bit
+* centOS 64-bit
 
 ## Setup
 
