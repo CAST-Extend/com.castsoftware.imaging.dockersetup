@@ -14,12 +14,14 @@ Cast Imaging provides MRI-like visibility into the most complex software systems
 
 ## Setup
 
-Download the zip file from [releases](https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup/releases) or clone the repository
+Download the zip file from [releases](https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup/releases) or clone the repository and checkout to the version you want to install. 
 ```
 git clone https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup.git
+cd com.castsoftware.imaging.dockersetup.git
+git checkout v1.11.3
 ```
 
-Navigate to the directory and run the install script
+Run the install script
 ```
 sudo python imaging.py -n install
 ```
