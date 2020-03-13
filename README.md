@@ -183,7 +183,7 @@ optional arguments:
 Example:
 ```
 $ mkdir zips
-$ ./exporter --host 192.168.0.1 --schema your_app_local --port 2280  --outputdir zips
+$ ./exporter --host 192.168.0.1 --schema your_app_local --port 2282  --outputdir zips
 ```
 
 #### Uninstalling
