@@ -4,7 +4,7 @@ window.config = {
   imagingAssistant: false,
   language: 'English_en', // Allowed values 'English_en' ,'Chinese_ch'
   isAdmin: true,
-  version: '1.11.3',
+  version: '1.12.0-BETA1',
   edgeBrowser: !(false || !!document.documentMode) && !!window.StyleMedia,
   year: '2020',
   nodeNumber: 3000, // Limit for progressive rendering - For loading large graph faster
