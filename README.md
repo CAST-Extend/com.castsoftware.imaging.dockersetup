@@ -14,12 +14,14 @@ Cast Imaging provides MRI-like visibility into the most complex software systems
 
 ## Setup
 
-Download the zip file from [releases](https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup/releases) or clone the repository
+Download the zip file from [releases](https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup/releases) or clone the repository and checkout to the version you want to install. 
 ```
-git clone https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup.git
+git clone https://github.com/CAST-Extend/com.castsoftware.imaging.dockersetup
+cd com.castsoftware.imaging.dockersetup.git
+git checkout v1.11.3
 ```
 
-Navigate to the directory and run the install script
+Run the install script
 ```
 sudo python imaging.py -n install
 ```
@@ -141,6 +143,47 @@ LOG_PATH (OPTIONAL) //Logfile will be generated if provided
 Run the `etl-automation` executable with the config file:
 ```
 sudo ./etl-automation -CONFIG etl_config.json
+```
+
+#### Exporter
+
+The exporter is a standalone tool that can be run by itself.
+
+Make sure you have the extracted contents of `automation_scripts.zip` and that the binary has execute permissions: `sudo chmod +x exporter`
+
+```
+$ ./exporter
+usage: --schema my_local --user operator --host my_host --port 2282 --outputdir my_csv_folder_path
+
+Connect to a schema, extract data and generate csvs from local service
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --log LOG             output log file path (default: None)
+  --outputdir OUTPUTDIR
+                        output directory (default: None)
+  --debug               print debug messages (default: False)
+  --debuginfo DEBUGINFO
+                        control check files YES or NO default is NO (default:
+                        NO)
+  --cfg CFG             Regeneration of config files YES or NO default is NO
+                        (default: NO)
+  --aiptable AIPTABLE   force the extraction of AIP Tables YES or NO default
+                        is NO (default: NO)
+  --user USER           username used to connect to CSS server (default:
+                        operator)
+  --password PASSWORD   password used to connect to CSS server (default:
+                        CastAIP)
+  --host HOST           host for CSS server (default: localhost)
+  --port PORT           knowledge base port (default: 2282)
+  --schema SCHEMA       knowledge base name (default: None)
+  --version             show program's version number and exit
+```
+
+Example:
+```
+$ mkdir zips
+$ ./exporter --host 192.168.0.1 --schema your_app_local --port 2282  --outputdir zips
 ```
 
 #### Uninstalling
