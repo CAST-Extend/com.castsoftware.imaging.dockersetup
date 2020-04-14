@@ -129,7 +129,7 @@ Configure the `etl_config.json` file in the `etl-automation` directory according
 ```
 PORT //Database Port
 HOST //Database Instance
-SCHEMA //Database schema name
+SCHEMA //Database schema name (Accepts single value or an array of schemas. To export all schemas in DB, use 'all')
 OUTPUTDIR //Directory to place exported zip file of application
 IMAGING_HOSTNAME //Your Imaging Instance URL/IP
 IMAGING_PORT //Port of your Imaging Instance
