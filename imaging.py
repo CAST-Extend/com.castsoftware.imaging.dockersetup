@@ -66,11 +66,11 @@ def run(cmd):
 def get_config_location():
 
     if platform.system() == "Linux":
-        return "/opt/CAST/container_support/"
+        return "/opt/CAST/container-support/"
     if platform.system() == "Darwin":
-        return os.path.expanduser('~')+"/CAST/container_support/"
+        return os.path.expanduser('~')+"/CAST/container-support/"
     if platform.system() == "Windows":
-        return "C:\Program Files\CAST\container_support"+"\\"
+        return "C:\Program Files\CAST\container-support"+"\\"
     else:
         raise Exception("Platform not supported.")
 
@@ -80,7 +80,7 @@ def get_exec_location():
     if platform.system() in ["Linux", "Darwin"]:
         return "/usr/local/bin/imaging"
     if platform.system() == "Windows":
-        return "C:\Program Files\CAST\container_support\imaging"
+        return "C:\Program Files\CAST\container-support\imaging"
     else:
         raise Exception("Unable to find location to install executable.")
 
@@ -228,7 +228,7 @@ class UpdateImage(argparse.Action):
                     print("Image tag for " + imagename + " updated successfully with " + imagetag)
 
         except Exception as error:
-            return error
+            sys.exit(error)
 
 
 def main():
