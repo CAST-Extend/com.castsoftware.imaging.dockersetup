@@ -1,3 +1,7 @@
+#### *****Important Update*****
+This repository is no longer supported. 
+Get the latest Imaging System for Linux here: https://extend.castsoftware.com/#/extension?id=com.castsoftware.imaging.linux&version=latest
+
 # CAST Imaging System
 Cast Imaging provides MRI-like visibility into the most complex software systems. Imaging System intelligently organizes complex applications into logical application layers. Save time and money analyzing and mapping complex software and shorten the learning curve for new developers. Break down monolithic applications, visualize future designs and plan migrations from existing designs. Make architectural visibility accessible and scalable across the organization.
 
